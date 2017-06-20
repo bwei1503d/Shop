@@ -29,11 +29,11 @@ public class SplashActivity extends BaseMvpActivity<SplashView,SplashPresenter> 
         setContentView(R.layout.activity_main);
 
 
+        presenter.getData();
 
 
         startActivity(new Intent(this, TabActivity.class));
 
-//        presenter.getData();
 
 
 

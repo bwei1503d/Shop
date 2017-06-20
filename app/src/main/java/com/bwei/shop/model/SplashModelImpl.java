@@ -39,7 +39,7 @@ public class SplashModelImpl {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(int code) {
 
 
             }

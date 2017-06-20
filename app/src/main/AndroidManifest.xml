@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".base.IActivity" />
         <activity android:name=".base.BaseMvpActivity" />
-        <activity android:name=".activitys.TabActivity" />
+        <activity android:name=".activitys.TabActivity"  android:theme="@style/TabAppTheme" />
     </application>
 
 </manifest>

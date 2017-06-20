@@ -1,5 +1,7 @@
 package com.bwei.shop.network;
 
+import com.socks.library.KLog;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -20,12 +22,18 @@ public abstract  class BaseObserver implements Observer<String> {
     @Override
     public void onNext(@NonNull String s) {
 
+        KLog.i(s);
+
         onSuccess(s);
 
     }
 
     @Override
     public void onError(@NonNull Throwable e) {
+
+        KLog.i(e.getCause());
+
+        onFailed(0);
 
     }
 
@@ -36,6 +44,6 @@ public abstract  class BaseObserver implements Observer<String> {
 
 
     public abstract void onSuccess(String result);
-    public abstract void onFailed();
+    public abstract void onFailed(int code);
 
 }

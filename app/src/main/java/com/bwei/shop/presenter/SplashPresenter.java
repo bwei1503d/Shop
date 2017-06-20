@@ -26,6 +26,8 @@ public class SplashPresenter extends BasePresenter<SplashView> {
 
     public void getData(){
 
+        System.out.println("view = " + view);
+
         splashModel.getData();
     }
 
