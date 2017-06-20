@@ -3,12 +3,10 @@ package com.bwei.shop.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,10 +15,11 @@ import com.bumptech.glide.Glide;
 import com.bwei.shop.R;
 import com.bwei.shop.bean.IndexBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
-import static android.media.CamcorderProfile.get;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by muhanxi on 17/6/20.
@@ -31,42 +30,50 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
 
     public static final String base_image = "http://image3.suning.cn";
 
-    private final int singleType = 0 ;
-    private final int horizontalType = 1 ;
+    private final int singleType = 0;
+    private final int horizontalType = 1;
 
 
-    private final int defaultType = 2 ;
+    private final int defaultType = 2;
 
     private Context context;
 
-    public List<IndexBean.DataBean> list ;
+    public List<IndexBean.DataBean> list;
 
-    public IndexFragmentRecycleViewAdapter(Context context, List<IndexBean.DataBean> list){
+    public IndexFragmentRecycleViewAdapter(Context context) {
         this.context = context;
-        this.list = list ;
+    }
+
+
+    public void setData(List<IndexBean.DataBean> data) {
+        if (list == null) {
+            this.list = new ArrayList<IndexBean.DataBean>();
+        }
+        this.list.addAll(data);
+        notifyDataSetChanged();
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view ;
-        RecyclerView.ViewHolder viewHolder = null ;
+        View view;
+        RecyclerView.ViewHolder viewHolder = null;
         switch (viewType) {
 
             case singleType:
-                 view =  LayoutInflater.from(context).inflate(R.layout.singlepic_item,parent,false);
+                view = LayoutInflater.from(context).inflate(R.layout.singlepic_item, parent, false);
                 viewHolder = new SinglePicViewHolder(view);
 
                 break;
             case horizontalType:
 
-                view =  LayoutInflater.from(context).inflate(R.layout.horizontalscroll_item,parent,false);
-                viewHolder  = new HorizontalScrollViewViewHolder(view);
+                view = LayoutInflater.from(context).inflate(R.layout.horizontalscroll_item, parent, false);
+                viewHolder = new HorizontalScrollViewViewHolder(view);
                 break;
             default:
 
-                view = LayoutInflater.from(context).inflate(R.layout.index_default_item,parent,false);
+                view = LayoutInflater.from(context).inflate(R.layout.index_default_item, parent, false);
 
                 viewHolder = new DefaultViewHodler(view);
 
@@ -74,7 +81,7 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
 
 
         }
-        return viewHolder ;
+        return viewHolder;
 
 
     }
@@ -83,45 +90,44 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
 
-        if(list == null || list.size() == 0){
+        if (list == null || list.size() == 0) {
             return;
         }
 
 
-        if(holder instanceof SinglePicViewHolder){
+        if (holder instanceof SinglePicViewHolder) {
 
 
-            SinglePicViewHolder holder1 = (SinglePicViewHolder) holder ;
+            SinglePicViewHolder holder1 = (SinglePicViewHolder) holder;
 
-           String pic =   list.get(position).getTag().get(0).getPicUrl() ;
-            Glide.with(context).load(base_image+pic).into(holder1.imageView);
+            String pic = list.get(position).getTag().get(0).getPicUrl();
+            Glide.with(context).load(base_image + pic).into(holder1.imageView);
 
-        }  else if(holder instanceof HorizontalScrollViewViewHolder){
-            HorizontalScrollViewViewHolder horizontalScrollViewViewHolder = (HorizontalScrollViewViewHolder) holder ;
-            String pic =   list.get(position).getTag().get(0).getPicUrl() ;
+        } else if (holder instanceof HorizontalScrollViewViewHolder) {
+            HorizontalScrollViewViewHolder horizontalScrollViewViewHolder = (HorizontalScrollViewViewHolder) holder;
+            String pic = list.get(position).getTag().get(0).getPicUrl();
 
-            Glide.with(context).load(base_image+pic).into(horizontalScrollViewViewHolder.topImageView);
+            Glide.with(context).load(base_image + pic).into(horizontalScrollViewViewHolder.topImageView);
 
 
+            int size = list.get(position).getTag().size();
 
-            int size =  list.get(position).getTag().size();
-
-            for(int i=1;i<size;i++){
+            for (int i = 1; i < size; i++) {
                 //图片对应的路径
-                String item_pic =   list.get(position).getTag().get(i).getPicUrl();
+                String item_pic = list.get(position).getTag().get(i).getPicUrl();
 
 
-                System.out.println("item_pic = " +base_image + item_pic);
+                System.out.println("item_pic = " + base_image + item_pic);
 
                 LinearLayout linearLayout = new LinearLayout(context);
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
-                linearLayout.setPadding(10,10,10,0);
+                linearLayout.setPadding(10, 10, 10, 0);
 
 
                 ImageView imageView = new ImageView(context);
-                imageView.setLayoutParams(new LinearLayout.LayoutParams(200,200));
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(200, 200));
 
-                Glide.with(context).load(base_image+item_pic).into(imageView);
+                Glide.with(context).load(base_image + item_pic).into(imageView);
 
 
                 TextView textView = new TextView(context);
@@ -129,8 +135,6 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
                 textView.setTextColor(Color.RED);
                 textView.setTextSize(20f);
                 textView.setGravity(Gravity.CENTER);
-
-
 
 
                 linearLayout.addView(imageView);
@@ -141,29 +145,13 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
                 horizontalScrollViewViewHolder.linearLayout.addView(linearLayout);
 
 
-
             }
-
-
-
-
-
-
-
-
-
-
 
 
         }
 
 
-
-
-
     }
-
-
 
 
     @Override
@@ -172,11 +160,11 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
 
         System.out.println("position = " + position);
 
-        if(position == 0){
+        if (position == 0) {
             return singleType;
-        }else if(position == 1){
+        } else if (position == 1) {
             return horizontalType;
-        }else {
+        } else {
             return defaultType;
         }
 
@@ -190,46 +178,43 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
     }
 
     // 单张图片
-   private class SinglePicViewHolder extends RecyclerView.ViewHolder {
+     class SinglePicViewHolder extends RecyclerView.ViewHolder {
 
-
-        ImageView imageView ;
+        @BindView(R.id.singleitem_imageview)
+        ImageView imageView;
 
         public SinglePicViewHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.singleitem_imageview);
-
+            ButterKnife.bind(this, itemView);
         }
     }
 
 
     //水平滚动的item
-    private class HorizontalScrollViewViewHolder extends RecyclerView.ViewHolder {
-
-        LinearLayout linearLayout ;
-        ImageView topImageView ;
+     class HorizontalScrollViewViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.horizontal_linearlayout)
+        LinearLayout linearLayout;
+        @BindView(R.id.horizontals_imageview)
+        ImageView topImageView;
 
         public HorizontalScrollViewViewHolder(View itemView) {
             super(itemView);
-            linearLayout = (LinearLayout) itemView.findViewById(R.id.horizontal_linearlayout);
-            topImageView = (ImageView) itemView.findViewById(R.id.horizontals_imageview);
-
+            ButterKnife.bind(this, itemView);
         }
     }
 
 
-    private class DefaultViewHodler extends  RecyclerView.ViewHolder{
+     class DefaultViewHodler extends RecyclerView.ViewHolder {
 
-        TextView textView ;
+        @BindView(R.id.indexfragment_textview)
+        TextView textView;
 
         public DefaultViewHodler(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
 
-            textView = (TextView) itemView.findViewById(R.id.indexfragment_textview);
         }
     }
-
-
 
 }
 

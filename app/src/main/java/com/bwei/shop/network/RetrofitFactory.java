@@ -1,12 +1,17 @@
 package com.bwei.shop.network;
 
+import com.bwei.shop.bean.IndexBean;
 import com.bwei.shop.network.cookie.CookiesManager;
+import com.google.gson.Gson;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -49,10 +54,19 @@ public class RetrofitFactory {
     }
 
 
+
     public static Observable<String> get(String url, Map<String,String> map){
 
         return apiService.get(url,map).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    public static void get(String url, Map<String,String> map, Observer<String> observer){
+
+         apiService.get(url,map).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                 .subscribe(observer);
     }
 
 
@@ -62,7 +76,11 @@ public class RetrofitFactory {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-
+    public static void post(String url,Map<String,String> map, Observer<String> observer){
+          apiService.post(url,map).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe(observer);
+    }
 
 
 

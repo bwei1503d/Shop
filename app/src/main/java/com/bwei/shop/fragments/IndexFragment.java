@@ -16,8 +16,9 @@ import com.bwei.shop.bean.IndexBean;
 import com.bwei.shop.presenter.IndexFragmentPresenter;
 import com.bwei.shop.view.IndexFragmentView;
 
-import java.util.ArrayList;
-import java.util.List;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,14 +27,15 @@ import java.util.List;
  */
 
 
-public class IndexFragment extends BaseMvpFragment<IndexFragmentView,IndexFragmentPresenter> implements IndexFragmentView {
+public class IndexFragment extends BaseMvpFragment<IndexFragmentView, IndexFragmentPresenter> implements IndexFragmentView {
     private static final String ARG_PARAM1 = "param1";
+    Unbinder unbinder;
 
     // TODO: Rename and change types of parameters
     private int mParam1;
-    private RecyclerView recyclerView;
+    @BindView(R.id.recycleview_id)
+    RecyclerView recyclerView;
 
-    private List<IndexBean.DataBean> list = new ArrayList<IndexBean.DataBean>();
     private IndexFragmentRecycleViewAdapter adapter;
 
     @Override
@@ -64,19 +66,21 @@ public class IndexFragment extends BaseMvpFragment<IndexFragmentView,IndexFragme
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_index, container, false);
+        View view = inflater.inflate(R.layout.fragment_index, container, false);
 
+        unbinder = ButterKnife.bind(this, view);
         initView(view);
-        return  view;
+
+        return view;
     }
 
 
-    public void initView(View view){
+    public void initView(View view) {
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycleview_id);
-        adapter = new IndexFragmentRecycleViewAdapter(getActivity(),list);
+//        recyclerView = (RecyclerView) view.findViewById(R.id.recycleview_id);
+        adapter = new IndexFragmentRecycleViewAdapter(getActivity());
 
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
 
         recyclerView.setLayoutManager(manager);
@@ -88,18 +92,21 @@ public class IndexFragment extends BaseMvpFragment<IndexFragmentView,IndexFragme
     }
 
 
-
-
     @Override
     public void onSuccess(IndexBean indexBean) {
-        list.addAll(indexBean.getData());
 
-        adapter.notifyDataSetChanged();
+        adapter.setData(indexBean.getData());
 
     }
 
     @Override
     public void onFailed(int code) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

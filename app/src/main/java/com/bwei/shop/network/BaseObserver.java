@@ -1,5 +1,6 @@
 package com.bwei.shop.network;
 
+import com.google.gson.Gson;
 import com.socks.library.KLog;
 
 import io.reactivex.Observable;
@@ -14,13 +15,20 @@ import io.reactivex.disposables.Disposable;
 public abstract  class BaseObserver implements Observer<String> {
 
 
+
+
+
     @Override
     public void onSubscribe(@NonNull Disposable d) {
 
+
     }
+
+
 
     @Override
     public void onNext(@NonNull String s) {
+
 
         KLog.i(s);
 
@@ -31,7 +39,7 @@ public abstract  class BaseObserver implements Observer<String> {
     @Override
     public void onError(@NonNull Throwable e) {
 
-        KLog.i(e.getCause());
+        KLog.i(e.getMessage());
 
         onFailed(0);
 
