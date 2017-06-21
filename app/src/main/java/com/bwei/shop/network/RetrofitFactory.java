@@ -46,20 +46,16 @@ public class RetrofitFactory {
 
 
 
-    public  static Observable<String> get(String url){
-       return apiService.get(url)
-               .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
 
+
+    public  static void get(String url,Observer<String> observer){
+         apiService.get(url)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
     }
 
 
-
-    public static Observable<String> get(String url, Map<String,String> map){
-
-        return apiService.get(url,map).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
 
 
     public static void get(String url, Map<String,String> map, Observer<String> observer){
@@ -71,10 +67,7 @@ public class RetrofitFactory {
 
 
 
-    public static Observable<String> post(String url,Map<String,String> map){
-        return  apiService.post(url,map).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
+
 
     public static void post(String url,Map<String,String> map, Observer<String> observer){
           apiService.post(url,map).subscribeOn(Schedulers.io())

@@ -29,26 +29,23 @@ public class IndexFragmentModelImpl implements IndexFragmentModel  {
     public void getData(int pos, final IndexFragmentModelListener listener){
 
 
+        RetrofitFactory.get(url[pos], new BaseObserver() {
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                IndexBean indexBean =  gson.fromJson(result, IndexBean.class);
+
+                listener.onSuccess(indexBean);
+            }
+
+            @Override
+            public void onFailed(int code) {
+                listener.onFailed(code);
+
+            }
+        });
 
 
-
-        RetrofitFactory.get(url[pos])
-                .subscribe(new BaseObserver() {
-                    @Override
-                    public void onSuccess(String result) {
-
-                        Gson gson = new Gson();
-                        IndexBean indexBean =  gson.fromJson(result, IndexBean.class);
-
-                        listener.onSuccess(indexBean);
-                    }
-
-                    @Override
-                    public void onFailed(int code) {
-
-                        listener.onFailed(code);
-                    }
-                });
 
 
     }

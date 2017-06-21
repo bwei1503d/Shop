@@ -32,9 +32,10 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
 
     private final int singleType = 0;
     private final int horizontalType = 1;
+    private final int tuigouType = 2;
 
 
-    private final int defaultType = 2;
+    private final int defaultType = 3;
 
     private Context context;
 
@@ -71,6 +72,10 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
                 view = LayoutInflater.from(context).inflate(R.layout.horizontalscroll_item, parent, false);
                 viewHolder = new HorizontalScrollViewViewHolder(view);
                 break;
+            case tuigouType:
+                view = LayoutInflater.from(context).inflate(R.layout.tuangou_item, parent, false);
+                viewHolder = new TuanGouViewHolder(view);
+                break;
             default:
 
                 view = LayoutInflater.from(context).inflate(R.layout.index_default_item, parent, false);
@@ -93,6 +98,7 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
         if (list == null || list.size() == 0) {
             return;
         }
+
 
 
         if (holder instanceof SinglePicViewHolder) {
@@ -148,6 +154,23 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
             }
 
 
+        } else if(holder instanceof TuanGouViewHolder){
+            TuanGouViewHolder tuanGouViewHolder = (TuanGouViewHolder) holder;
+
+            String item_pic = list.get(position).getTag().get(0).getPicUrl();
+            Glide.with(context).load(base_image+item_pic).into(tuanGouViewHolder.tuangouTop);
+
+            String item_pic1 = list.get(position+1).getTag().get(0).getPicUrl();
+            Glide.with(context).load(base_image+item_pic1).into(tuanGouViewHolder.tuangouBigimage);
+
+            tuanGouViewHolder.tuangouTitle.setText(list.get(position+1).getTag().get(0).getElementName());
+            tuanGouViewHolder.tuangouDes.setText(list.get(position+1).getTag().get(0).getElementDesc());
+
+
+        } else if(holder instanceof DefaultViewHodler){
+            DefaultViewHodler defaultViewHodler = (DefaultViewHodler) holder;
+            defaultViewHodler.textView.setVisibility(View.GONE);
+
         }
 
 
@@ -160,13 +183,23 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
 
         System.out.println("position = " + position);
 
-        if (position == 0) {
-            return singleType;
-        } else if (position == 1) {
-            return horizontalType;
-        } else {
-            return defaultType;
+        int type = 0 ;
+        switch (position){
+            case 0:
+                type = singleType ;
+                break;
+            case 1:
+                type = horizontalType ;
+                break;
+            case 2:
+                type = tuigouType;
+                break;
+            default:
+                type = defaultType ;
+                break;
         }
+        return type;
+
 
 
     }
@@ -178,7 +211,7 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
     }
 
     // 单张图片
-     class SinglePicViewHolder extends RecyclerView.ViewHolder {
+    class SinglePicViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.singleitem_imageview)
         ImageView imageView;
@@ -191,7 +224,7 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
 
 
     //水平滚动的item
-     class HorizontalScrollViewViewHolder extends RecyclerView.ViewHolder {
+    class HorizontalScrollViewViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.horizontal_linearlayout)
         LinearLayout linearLayout;
         @BindView(R.id.horizontals_imageview)
@@ -204,7 +237,7 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
     }
 
 
-     class DefaultViewHodler extends RecyclerView.ViewHolder {
+    class DefaultViewHodler extends RecyclerView.ViewHolder {
 
         @BindView(R.id.indexfragment_textview)
         TextView textView;
@@ -216,5 +249,26 @@ public class IndexFragmentRecycleViewAdapter extends RecyclerView.Adapter<Recycl
         }
     }
 
+    //团购
+     class TuanGouViewHolder extends RecyclerView.ViewHolder{
+        @BindView(R.id.tuangou_top)
+        ImageView tuangouTop;
+        @BindView(R.id.tuangou_bigimage)
+        ImageView tuangouBigimage;
+        @BindView(R.id.tuangou_title)
+        TextView tuangouTitle;
+        @BindView(R.id.tuangou_des)
+        TextView tuangouDes;
+        @BindView(R.id.tuangou_price)
+        TextView tuangouPrice;
+
+        @BindView(R.id.tuangou_buttom)
+        LinearLayout linearLayoutButtom;
+
+        public TuanGouViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
 }
 

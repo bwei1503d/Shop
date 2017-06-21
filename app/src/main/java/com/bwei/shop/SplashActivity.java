@@ -13,8 +13,8 @@ import com.bwei.shop.view.SplashView;
 
 /**
  * 启动页面
+ *
  */
-
 public class SplashActivity extends BaseMvpActivity<SplashView,SplashPresenter> {
 
 

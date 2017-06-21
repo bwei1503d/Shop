@@ -67,8 +67,8 @@ public class IndexFragment extends BaseMvpFragment<IndexFragmentView, IndexFragm
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_index, container, false);
-
         unbinder = ButterKnife.bind(this, view);
+
         initView(view);
 
         return view;
@@ -94,6 +94,9 @@ public class IndexFragment extends BaseMvpFragment<IndexFragmentView, IndexFragm
 
     @Override
     public void onSuccess(IndexBean indexBean) {
+
+        indexBean.getData().remove(2);
+        indexBean.getData().remove(3);
 
         adapter.setData(indexBean.getData());
 
