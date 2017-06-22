@@ -27,7 +27,7 @@ public class RetrofitFactory {
 
 
 
-    public static OkHttpClient okHttpClient = new OkHttpClient.Builder()
+    private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .cookieJar(new CookiesManager())
             .connectTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20,TimeUnit.SECONDS)
@@ -36,7 +36,7 @@ public class RetrofitFactory {
             .build();
 
 
-    public  static ApiService apiService = new Retrofit.Builder()
+    private   static ApiService apiService = new Retrofit.Builder()
             .baseUrl("http://qbh.2dyt.com")
             .addConverterFactory(ScalarsConverterFactory.create())
             .client(okHttpClient)
