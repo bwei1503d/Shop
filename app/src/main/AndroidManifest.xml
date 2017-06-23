@@ -3,6 +3,7 @@
     package="com.bwei.shop">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".base.IApplication"
@@ -20,7 +21,11 @@
         </activity>
         <activity android:name=".base.IActivity" />
         <activity android:name=".base.BaseMvpActivity" />
-        <activity android:name=".activitys.TabActivity"  android:theme="@style/TabAppTheme" />
+        <activity
+            android:name=".activitys.TabActivity"
+            android:theme="@style/TabAppTheme" />
+        <activity android:name=".activitys.PermissionActivity" />
+        <activity android:name=".activitys.PermissionActivity1"></activity>
     </application>
 
 </manifest>

@@ -4,15 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bwei.shop.SplashActivity">
+    android:orientation="vertical"
+    >
 
-
-    <TextView
-        android:text="1234567890-1234567890"
-        android:textColor="@color/cwhite"
-        android:background="@color/cblack"
-        android:id="@+id/textview_id"
+    <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/to_camear_btn"/>
 
 </LinearLayout>
