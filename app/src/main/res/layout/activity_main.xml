@@ -12,7 +12,7 @@
         android:textColor="@color/cwhite"
         android:background="@color/cblack"
         android:id="@+id/textview_id"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/x320"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

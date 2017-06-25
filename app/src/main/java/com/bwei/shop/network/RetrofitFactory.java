@@ -1,5 +1,6 @@
 package com.bwei.shop.network;
 
+import com.bwei.shop.base.IApplication;
 import com.bwei.shop.bean.IndexBean;
 import com.bwei.shop.network.cookie.CookiesManager;
 import com.google.gson.Gson;
@@ -28,11 +29,11 @@ public class RetrofitFactory {
 
 
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .cookieJar(new CookiesManager())
+            .cookieJar(new CookiesManager(IApplication.application))
             .connectTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20,TimeUnit.SECONDS)
             .writeTimeout(20,TimeUnit.SECONDS)
-            .addInterceptor(new LoggingInterceptor())
+            .addNetworkInterceptor(new LoggingInterceptor())
             .build();
 
 

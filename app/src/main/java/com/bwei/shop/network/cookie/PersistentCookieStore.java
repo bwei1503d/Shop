@@ -64,11 +64,19 @@ public class PersistentCookieStore {
             }
             cookies.get(url.host()).put(name, cookie);
         } else {
-            if (cookies.containsKey(url.host())) {
-                cookies.get(url.host()).remove(name);
+//            if (cookies.containsKey(url.host())) {
+//                cookies.get(url.host()).remove(name);
+//            }
+            if(!cookies.containsKey(url.host())){
+                ConcurrentHashMap<String,Cookie> map =  new ConcurrentHashMap<String, Cookie>() ;
+                map.put(name,cookie);
+                cookies.put(url.host(),map);
             }
+
+
         }
 
+        System.out.println("cookie = "+ url +   "  " + cookie + "  " + cookies);
         //讲cookies持久化到本地
         SharedPreferences.Editor prefsWriter = cookiePrefs.edit();
         prefsWriter.putString(url.host(), TextUtils.join(",", cookies.get(url.host()).keySet()));
@@ -80,6 +88,8 @@ public class PersistentCookieStore {
         ArrayList<Cookie> ret = new ArrayList<>();
         if (cookies.containsKey(url.host()))
             ret.addAll(cookies.get(url.host()).values());
+        System.out.println("cookie = size "+ cookies.size());
+
         return ret;
     }
 

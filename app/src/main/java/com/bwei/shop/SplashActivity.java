@@ -16,6 +16,8 @@ import com.bwei.shop.presenter.SplashPresenter;
 import com.bwei.shop.utils.DeviceUtils;
 import com.bwei.shop.view.SplashView;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 
 /**
  * 启动页面
@@ -37,16 +39,18 @@ public class SplashActivity extends BaseMvpActivity<SplashView,SplashPresenter> 
         setContentView(R.layout.activity_main);
 
 
-//        TextView textView = (TextView) findViewById(R.id.textview_id);
+        final TextView textView = (TextView) findViewById(R.id.textview_id);
 //
 //        textView.setLayoutParams(new LinearLayout.LayoutParams(DeviceUtils.px2dip(this,100),100));
 //
-//        Toast.makeText(this, "" + textView.getLayoutParams().width, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + textView.getLayoutParams().width, Toast.LENGTH_SHORT).show();
 
 //        presenter.getData();
-        startActivity(new Intent(this, PermissionActivity1.class));
+        startActivity(new Intent(this, TabActivity.class));
+
 
 
 
     }
+
 }

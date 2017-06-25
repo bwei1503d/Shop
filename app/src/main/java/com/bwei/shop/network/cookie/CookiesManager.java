@@ -2,6 +2,8 @@ package com.bwei.shop.network.cookie;
 
 
 
+import android.content.Context;
+
 import com.bwei.shop.base.IApplication;
 
 import java.util.List;
@@ -12,7 +14,12 @@ import okhttp3.HttpUrl;
 
 public class CookiesManager implements CookieJar {
 
-    private final PersistentCookieStore cookieStore = new PersistentCookieStore(IApplication.application);
+    public CookiesManager(Context context){
+         cookieStore = new PersistentCookieStore(context);
+
+    }
+
+    private PersistentCookieStore cookieStore = null ;
 
     @Override
     public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {

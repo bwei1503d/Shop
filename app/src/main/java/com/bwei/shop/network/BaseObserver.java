@@ -38,8 +38,9 @@ public abstract  class BaseObserver implements Observer<String> {
 
     @Override
     public void onError(@NonNull Throwable e) {
-
-        KLog.i(e.getMessage());
+        e.printStackTrace() ;
+        System.out.println();
+        KLog.i(e);
 
         onFailed(0);
 
